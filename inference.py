@@ -24,10 +24,13 @@ model.eval()    # 预测模式
 '''
 1、对图片分类
 '''
-image,label=dataset[0]
+import random
+idx = random.randint(0,len(dataset)-1)
+image,label=dataset[idx]
 print('正确分类:',label)
 plt.imshow(image.permute(1,2,0))
-plt.show()
+plt.savefig('inference.png')
+plt.close()
 
 targets=torch.arange(0,10)  #10种分类
 logits=model(image.unsqueeze(0).to(DEVICE),targets.to(DEVICE)) # 1张图片 vs 10种分类
@@ -60,4 +63,5 @@ for i,img_idx in enumerate(indexs):
     plt.imshow(other_images[img_idx].permute(1,2,0))
     plt.title(other_labels[img_idx])
     plt.axis('off')
-plt.show()
+plt.savefig('inference_similar.png')
+plt.close()
